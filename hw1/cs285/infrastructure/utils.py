@@ -33,7 +33,7 @@ def sample_trajectory(env, policy, max_path_length, render=False):
             image_obs.append(cv2.resize(img, dsize=(250, 250), interpolation=cv2.INTER_CUBIC))
     
         # TODO use the most recent ob to decide what to do
-        ac = policy(ptu.from_numpy(ob)).get_action().cpu().numpy() # HINT: this is a numpy array
+        ac = policy(ptu.from_numpy(ob)).sample().cpu().numpy() # HINT: this is a numpy array
         # print(ac)
         # ac = ac[0]
 
