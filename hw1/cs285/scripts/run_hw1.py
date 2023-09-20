@@ -141,8 +141,12 @@ def run_training_loop(params):
                 # TODO: relabel collected obsevations (from our policy) with labels from expert policy
                 # HINT: query the policy (using the get_action function) with paths[i]["observation"]
                 # and replace paths[i]["action"] with these expert labels
-                for path in paths:
+                for i, path in enumerate(paths):
+                    print("before")
+                    print(paths[i]['action'])
                     path['action'] = expert_policy.get_action(path['observation'])
+                    print("after")
+                    print(paths[i]['action'])
 
         total_envsteps += envsteps_this_batch
         # add collected data to replay buffer

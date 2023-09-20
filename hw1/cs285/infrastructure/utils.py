@@ -33,9 +33,12 @@ def sample_trajectory(env, policy, max_path_length, render=False):
             image_obs.append(cv2.resize(img, dsize=(250, 250), interpolation=cv2.INTER_CUBIC))
     
         # TODO use the most recent ob to decide what to do
-        ac = policy(ptu.from_numpy(ob)).sample().cpu().numpy() # HINT: this is a numpy array
+        if type(policy(ptu.from_numpy(ob))).__name__ == 'Tensor':
+            ac = policy(ptu.from_numpy(ob)).detach().cpu().numpy()
+        else:
+            ac = policy(ptu.from_numpy(ob)).sample((2, )).cpu().numpy() # HINT: this is a numpy array
         # print(ac)
-        # ac = ac[0]
+        ac = ac[0]
 
         # TODO: take that action and get reward and next ob
         next_ob, rew, done, _ = env.step(ac)
